@@ -1,0 +1,36 @@
+﻿@using JLBlazor_Ecommerce.Shared.Models;
+
+<h3>Product List</h3>
+<ul class="list-unstyled">
+    @foreach (var item in products)
+    {
+        <li class="media my-3">
+            <div class="media-img-wrapper mr-2">
+                <a href="#">
+                    <img class="media-img" src="@item.ImageUrl" alt="@item.Title" />
+                </a>
+            </div>
+            <div class ="media-body">
+                <a href="#">
+                    <h4 class="mb-0">@item.Title</h4>
+                </a>
+                <p>@item.Description</p>
+                <h5 class="price">$@item.Price</h5>
+            </div>
+        </li>
+    }
+</ul>
+
+@code {
+    private static List<Product> products = new List<Product>
+    {
+        new Product
+        {
+            Id = 1,
+            Title = "Title Test",
+            ImageUrl = "https://img.freepik.com/psd-gratuitas/maquete-de-capa-dura-de-livro_125540-225.jpg?w=1060&t=st=1706211846~exp=1706212446~hmac=18ccff803b39d0e4852f63646f4f5f89e37e172de0593c79a0d22d8536ab4ae2",
+            Description = "Desc Test",
+            Price = 100,
+        }
+    };
+}
