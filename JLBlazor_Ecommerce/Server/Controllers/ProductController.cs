@@ -1,4 +1,6 @@
 ﻿using JLBlazor_Ecommerce.Server.Data;
+using JLBlazor_Ecommerce.Server.Services.ProductService;
+using JLBlazor_Ecommerce.Shared;
 using JLBlazor_Ecommerce.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,26 +12,25 @@ namespace JLBlazor_Ecommerce.Server.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-        public ProductController(DataContext dataContext)
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-            _dataContext = dataContext;
+            _productService = productService;
         }
         [HttpGet]
-        public ActionResult<List<Product>> GetProduct()
-        {
+        public ActionResult<ServiceResponse<List<Product>>> GetProduct()
+        {           
+            var products = _productService.GetProducts();
 
-            var teste = _dataContext.Products;
-            if (_dataContext.Products != null)
+            if (products.Result.Data.Any())
             {
-                var products = _dataContext.Products.ToList();
-
-                return Ok(products);
+                return Ok(products.Result);
             }
             else
-            {                
-                return NotFound("A coleção de produtos é nula.");
+            {
+                return BadRequest();
             }
+            
         }
 
     }
