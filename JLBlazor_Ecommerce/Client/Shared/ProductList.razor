@@ -1,8 +1,6 @@
 ﻿@inject IProductService ProductService
 @using JLBlazor_Ecommerce.Shared.Models;
 
-
-<h3>Product List</h3>
 <ul class="list-unstyled">
     @if (ProductService.Products != null)
     {
@@ -10,16 +8,16 @@
         {
             <li class="media my-3">
                 <div class="media-img-wrapper mr-2">
-                    <a href="#">
+                    <a href="/products/@item.Id">
                         <img class="media-img" src="@item.ImageUrl" alt="@item.Title" />
                     </a>
                 </div>
                 <div class="media-body">
-                    <a href="#">
+                    <a href="/products/@item.Id">
                         <h4 class="mb-0">@item.Title</h4>
                     </a>
                     <p>@item.Description</p>
-                    <h5 class="price">$@item.Price</h5>
+                    <h5 class="price">R$@item.Price</h5>
                 </div>
             </li>
         }
@@ -34,6 +32,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await ProductService.GetProduct();        
+        await ProductService.GetProducts();        
     }
 }

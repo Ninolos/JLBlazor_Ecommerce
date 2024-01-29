@@ -33,5 +33,22 @@ namespace JLBlazor_Ecommerce.Server.Controllers
             
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<ServiceResponse<Product>> GetProductById(int id)
+        {
+            var products = _productService.GetProductAsync(id);
+
+            if (products.Result.Data != null)
+            {
+                return Ok(products.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
     }
 }
