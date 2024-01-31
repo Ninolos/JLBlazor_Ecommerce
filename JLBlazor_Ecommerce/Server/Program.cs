@@ -1,4 +1,5 @@
 using JLBlazor_Ecommerce.Server.Data;
+using JLBlazor_Ecommerce.Server.Services.CategoryService;
 using JLBlazor_Ecommerce.Server.Services.ProductService;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
