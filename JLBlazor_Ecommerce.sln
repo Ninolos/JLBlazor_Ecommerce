@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JLBlazor_Ecommerce.Server", "JLBlazor_Ecommerce\Server\JLBlazor_Ecommerce.Server.csproj", "{2A7FD461-D30D-41BC-B48C-A3695BDFFF93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JLBlazor_Ecommerce.Server", "JLBlazor_Ecommerce\Server\JLBlazor_Ecommerce.Server.csproj", "{2A7FD461-D30D-41BC-B48C-A3695BDFFF93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JLBlazor_Ecommerce.Client", "JLBlazor_Ecommerce\Client\JLBlazor_Ecommerce.Client.csproj", "{1F249552-64CE-4A5E-943B-7ADF1E1CAC5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JLBlazor_Ecommerce.Client", "JLBlazor_Ecommerce\Client\JLBlazor_Ecommerce.Client.csproj", "{1F249552-64CE-4A5E-943B-7ADF1E1CAC5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JLBlazor_Ecommerce.Shared", "JLBlazor_Ecommerce\Shared\JLBlazor_Ecommerce.Shared.csproj", "{5D81F2E3-729B-4181-B760-21D9823FCDEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JLBlazor_Ecommerce.Shared", "JLBlazor_Ecommerce\Shared\JLBlazor_Ecommerce.Shared.csproj", "{5D81F2E3-729B-4181-B760-21D9823FCDEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
