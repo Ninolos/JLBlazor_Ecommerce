@@ -1,4 +1,5 @@
 ﻿@inject IProductService ProductService
+@implements IDisposable
 @using JLBlazor_Ecommerce.Shared.Models;
 
 <ul class="list-unstyled">
@@ -28,10 +29,16 @@
     }
 </ul>
 
-@code {   
+@code {
 
     protected override async Task OnInitializedAsync()
     {
-        await ProductService.GetProducts();        
+        ProductService.ProductsChanged += StateHasChanged;
+        await Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        ProductService.ProductsChanged -= StateHasChanged;
     }
 }
