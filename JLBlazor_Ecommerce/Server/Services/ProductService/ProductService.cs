@@ -1,6 +1,8 @@
 ﻿using JLBlazor_Ecommerce.Server.Data;
 using JLBlazor_Ecommerce.Shared;
 using JLBlazor_Ecommerce.Shared.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
 using static System.Net.WebRequestMethods;
 
 namespace JLBlazor_Ecommerce.Server.Services.ProductService
@@ -15,17 +17,29 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
         public Task<ServiceResponse<Product>> GetProductAsync(int productId)
         {
-            var response = new ServiceResponse<Product>();
-            var product = _dataContext.Products.Find(productId);
+            var response = new ServiceResponse<Product>();           
+
+            var product = _dataContext.Products
+                    .Where(p => p.Id == productId)
+                    .Select(p => new
+                    {
+                        Product = p,
+                        Variants = p.Variants.Select(v => new
+                        {
+                            Variant = v,
+                            ProductType = v.ProductType,
+                        })
+                    })
+                    .FirstOrDefault();
 
             if (product == null)
             {
                 response.Success = false;
-                response.Message = "Product not exist.";    
+                response.Message = "Product not exist.";
             }
             else
-            {
-                response.Data = product;
+            {                
+                response.Data = product.Product;
             }
 
             return Task.FromResult(response);
