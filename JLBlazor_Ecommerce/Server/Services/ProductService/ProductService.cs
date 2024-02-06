@@ -70,10 +70,10 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
             var products = _dataContext.Products.ToList();
 
             foreach (Product product in products)
-            {               
-                _dataContext.Entry(product)
-                                .Collection(p => p.Variants)
-                                .LoadAsync();
+            {
+                product.Variants = _dataContext.ProductVariants
+                                    .Where(v => v.ProductId == product.Id)
+                                    .ToList();
             }
 
             response.Data = products;
