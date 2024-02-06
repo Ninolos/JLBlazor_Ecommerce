@@ -47,12 +47,20 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
         public Task<ServiceResponse<List<Product>>> GetProductByCategory(string categoryUrl)
         {
-            var response = new ServiceResponse<List<Product>>
-            {
-                Data = _dataContext.Products.Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower())).ToList()
-            };
+            var response = new ServiceResponse<List<Product>>();
 
-             return Task.FromResult(response);
+            var products = _dataContext.Products.Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower())).ToList();
+
+            foreach (Product product in products)
+            {
+                _dataContext.Entry(product)
+                                .Collection(p => p.Variants)
+                                .LoadAsync();
+            }
+
+            response.Data = products;
+
+            return Task.FromResult(response);
         }
 
         public Task<ServiceResponse<List<Product>>> GetProducts()
