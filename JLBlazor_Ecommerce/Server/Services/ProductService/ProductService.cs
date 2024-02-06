@@ -57,10 +57,18 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
         public Task<ServiceResponse<List<Product>>> GetProducts()
         {
-            var response = new ServiceResponse<List<Product>> 
-            { 
-                Data = _dataContext.Products.ToList(),
-            };
+            var response = new ServiceResponse<List<Product>>();
+            
+            var products = _dataContext.Products.ToList();
+
+            foreach (Product product in products)
+            {               
+                _dataContext.Entry(product)
+                                .Collection(p => p.Variants)
+                                .LoadAsync();
+            }
+
+            response.Data = products;
 
             return Task.FromResult(response);
         }
