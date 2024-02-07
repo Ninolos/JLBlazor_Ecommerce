@@ -15,6 +15,17 @@ else
         <div class="media-body">
             <h2 class="mb-0">@product.Title</h2>
             <p>@product.Description</p>
+            @if (product.Variants != null && product.Variants.Count > 1)
+            {
+                <div class="mb-3">
+                    <select class="form-select" @bind="currentTypeId" style="width: fit-content;">
+                        @foreach (var variant in product.Variants)
+                        {
+                            <option value="@variant.ProductType.Id">@variant.ProductType.Name</option>
+                        }
+                    </select>
+                </div>
+            }
             @if (GetSelectedVariant() != null)
             {
                 @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
@@ -52,7 +63,7 @@ else
             product = result.Data;
             if (product.Variants.Count > 0)
             {
-                currentTypeId = product.Variants[0].ProductTypeId;
+                currentTypeId = product.Variants.First().ProductTypeId;
             }
         };
                 
