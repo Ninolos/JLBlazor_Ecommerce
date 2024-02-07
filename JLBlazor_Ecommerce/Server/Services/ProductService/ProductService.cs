@@ -80,6 +80,24 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
             return Task.FromResult(response);
         }
-       
+
+        public Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        {
+            var response = new ServiceResponse<List<Product>>();
+
+            var products = _dataContext.Products.Where(p => p.Title.ToLower().Contains(searchText.ToLower()) 
+                                                    || p.Description.ToLower().Contains(searchText.ToLower())).ToList();
+
+            foreach (Product product in products)
+            {
+                product.Variants = _dataContext.ProductVariants
+                                    .Where(v => v.ProductId == product.Id)
+                                    .ToList();
+            }
+
+            response.Data = products;
+
+            return Task.FromResult(response);
+        }
     }
 }
