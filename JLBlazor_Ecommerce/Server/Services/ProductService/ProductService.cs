@@ -80,19 +80,58 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
             return Task.FromResult(response);
         }
-
         public Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        {
+            return FindProductsSearchText(searchText);
+        }
+
+        public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestion(string searchText)
         {
             var response = new ServiceResponse<List<Product>>();
 
-            var products = _dataContext.Products.Where(p => p.Title.ToLower().Contains(searchText.ToLower()) 
-                                                    || p.Description.ToLower().Contains(searchText.ToLower())).ToList();
+            response = await FindProductsSearchText(searchText);
+
+            var products = response.Data;
+
+            List<string> suggestions = new List<string>();
+
+            foreach (var product in products)
+            {
+                if (product.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                {
+                    suggestions.Add(product.Title);
+                }
+
+                if (product.Description != null)
+                {
+                    var ponctuation = product.Description.Where(char.IsPunctuation).Distinct().ToArray();
+                    var words = product.Description.Split().Select(s => s.Trim(ponctuation));
+
+                    foreach (var word in words)
+                    {
+                        if (word.Contains(searchText, StringComparison.OrdinalIgnoreCase) && !suggestions.Contains(word))
+                        {
+                            suggestions.Add(word);
+                        }
+                    }
+                }
+            }
+
+            return new ServiceResponse<List<string>> { Data = suggestions };
+        }
+
+        private Task<ServiceResponse<List<Product>>> FindProductsSearchText(string searchText)
+        {
+            var response = new ServiceResponse<List<Product>>();
+
+            var products = _dataContext.Products
+                .Where(p => p.Title.ToLower().Contains(searchText.ToLower())
+                            || p.Description.ToLower().Contains(searchText.ToLower())).ToList();
 
             foreach (Product product in products)
             {
                 product.Variants = _dataContext.ProductVariants
-                                    .Where(v => v.ProductId == product.Id)
-                                    .ToList();
+                    .Where(v => v.ProductId == product.Id).ToList();
             }
 
             response.Data = products;
