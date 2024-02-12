@@ -67,5 +67,39 @@ namespace JLBlazor_Ecommerce.Server.Controllers
 
         }
 
+        [HttpGet]
+        [Route("search/{searchText}")]
+        public ActionResult<ServiceResponse<Product>> SearchProducts(string searchText)
+        {
+            var products = _productService.SearchProducts(searchText);
+
+            if (products.Result.Data != null)
+            {
+                return Ok(products.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpGet]
+        [Route("searchsuggestions/{searchText}")]
+        public ActionResult<ServiceResponse<Product>> SearchProductsSuggestions(string searchText)
+        {
+            var products = _productService.GetProductSearchSuggestion(searchText);
+
+            if (products.Result.Data != null)
+            {
+                return Ok(products.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
     }
 }

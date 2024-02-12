@@ -18,19 +18,12 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <div class="dropdown" @onclick="ToggleDropdown">
-                <button class="custom-btn dropdown-toggle" type="button" id="categoryDropdown" aria-haspopup="true" aria-expanded="@isDropdownOpen.ToString().ToLower()">
-                    Categories
-                </button>
-                <div class="@dropdownClass" aria-labelledby="categoryDropdown">
-                    @foreach (var category in CategoryService.Categories)
-                    {
-                        <a class="dropdown-item" href="@category.Url">
-                            @category.Name
-                        </a>
-                    }
-                </div>
-            </div>
+            @foreach (var category in CategoryService.Categories)
+            {
+                <NavLink class="nav-link" href="@category.Url">
+                    @category.Name
+                </NavLink>
+            }            
         </div>
     </nav>
 </div>
