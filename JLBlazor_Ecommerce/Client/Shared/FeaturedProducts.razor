@@ -2,7 +2,7 @@
 @implements IDisposable
 
 
-<center><h2>Top Products of Today</h2></center>
+<center><h2><i>🔥 Top Products of Today 🔥</i></h2></center>
 
 @if (ProductService.Products == null || ProductService.Products.Count == 0)
 {
@@ -17,15 +17,21 @@ else
             {
                 <div class="featured-product">
                     <div>
-                        <a href="product/@product.Id">
+                        <a href="/product/@product.Id">
                             <img src="@product.ImageUrl">
                         </a>
                     </div>
-                    <h4><a href="product/@product.Id"></a></h4>
-                    @if (product.Variants != null || product.Variants.Count > 0)
+                    <h4><a href="/product/@product.Id"></a></h4>
+                    @if (product.Variants != null && product.Variants.Count > 0)
                     {
                         <h5 class="price">
                             $@product.Variants[0].Price
+                        </h5>
+                    }
+                    else
+                    {
+                        <h5 class="price" style="color:red;">
+                            Not available :(
                         </h5>
                     }
                 </div>
@@ -35,9 +41,10 @@ else
 }
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         ProductService.ProductsChanged += StateHasChanged;
+        await Task.CompletedTask;
     }
 
     public void Dispose()
