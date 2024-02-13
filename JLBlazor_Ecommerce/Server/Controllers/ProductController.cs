@@ -101,5 +101,21 @@ namespace JLBlazor_Ecommerce.Server.Controllers
 
         }
 
+        [HttpGet]
+        [Route("featured")]
+        public ActionResult<ServiceResponse<Product>> GetFeaturedProducts()
+        {
+            var products = _productService.GetFeaturedProducts();
+
+            if (products.Result.Data != null)
+            {
+                return Ok(products.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }

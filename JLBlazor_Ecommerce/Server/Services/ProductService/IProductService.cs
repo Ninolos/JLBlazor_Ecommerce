@@ -10,5 +10,6 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
         Task<ServiceResponse<Product>> GetProductAsync(int  productId);
         Task<ServiceResponse<List<Product>>> SearchProducts(string searchText);
         Task<ServiceResponse<List<string>>> GetProductSearchSuggestion(string searchText);
+        Task<ServiceResponse<List<Product>>> GetFeaturedProducts();
     }
 }

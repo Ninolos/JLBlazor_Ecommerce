@@ -138,5 +138,23 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
             return Task.FromResult(response);
         }
+
+        public Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
+        {
+            var response = new ServiceResponse<List<Product>>();
+
+            var products = _dataContext.Products.Where(p => p.Featured).ToList();
+
+            foreach (Product product in products)
+            {
+                product.Variants = _dataContext.ProductVariants
+                                    .Where(v => v.ProductId == product.Id)
+                                    .ToList();
+            }
+
+            response.Data = products;
+
+            return Task.FromResult(response);
+        }
     }
 }
