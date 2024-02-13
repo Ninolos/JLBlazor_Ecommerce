@@ -36,10 +36,7 @@ main {
         text-overflow: ellipsis;
     }
 
-@media (max-width: 640.98px) {
-    .top-row:not(.auth) {
-        display: none;
-    }
+@media (max-width: 640.98px) {    
 
     .top-row.auth {
         justify-content: space-between;

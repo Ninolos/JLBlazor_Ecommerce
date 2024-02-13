@@ -1,0 +1,13 @@
+﻿.home-button {
+    white-space: nowrap;
+    margin-left: 10px;
+    margin-right: 20px;
+    transition: transform 2s, border-radius 2s, width 2s, height 2s;
+    border-radius: 0; 
+}
+
+    .home-button:hover {
+        transform: rotate(-5deg);
+        border-radius: 50%; 
+    }
+
