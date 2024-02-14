@@ -71,6 +71,7 @@
 
 .flex-nav {
     flex-direction: column;
+    justify-content: center;
 }
 
 @media (min-width: 641px) {
