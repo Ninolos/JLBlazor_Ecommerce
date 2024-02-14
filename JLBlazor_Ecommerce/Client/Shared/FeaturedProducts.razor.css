@@ -22,7 +22,7 @@ img:hover{
     margin: 20px;
     text-align: center;
     padding: 10px;
-    border: 1px solid;
+    border: 1px solid lightgray;
     border-radius: 10px;
     max-width: 200px;
 
