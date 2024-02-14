@@ -1,5 +1,6 @@
 ﻿using JLBlazor_Ecommerce.Server.Data;
 using JLBlazor_Ecommerce.Shared;
+using JLBlazor_Ecommerce.Shared.DTOs;
 using JLBlazor_Ecommerce.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Entity;
@@ -80,9 +81,37 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
             return Task.FromResult(response);
         }
-        public Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        public Task<ServiceResponse<ProductSearchResult>> SearchProducts(string searchText, int page)
         {
-            return FindProductsSearchText(searchText);
+            
+            var pageResult = 3.0;
+            var pageCount = Math.Ceiling((FindProductsSearchText(searchText)).Result.Data.Count / pageResult);
+
+            var products = _dataContext.Products
+                .Where(p => p.Title.ToLower().Contains(searchText.ToLower())
+                            || p.Description.ToLower().Contains(searchText.ToLower())).ToList();
+
+            foreach (Product product in products)
+            {
+                product.Variants = _dataContext.ProductVariants
+                    .Where(v => v.ProductId == product.Id).ToList();
+            }
+
+            var productsPagination = products.Skip((page - 1) * (int)pageResult).Take((int)pageResult).ToList();
+
+            var response = new ServiceResponse<ProductSearchResult>
+            {
+                Data = new ProductSearchResult
+                {
+                    Products = productsPagination,
+                    CurrentPage = page,
+                    Pages = (int)pageCount,
+            
+                }
+            };
+                       
+
+            return Task.FromResult(response);
         }
 
         public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestion(string searchText)
@@ -156,5 +185,6 @@ namespace JLBlazor_Ecommerce.Server.Services.ProductService
 
             return Task.FromResult(response);
         }
+        
     }
 }
