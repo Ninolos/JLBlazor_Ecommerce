@@ -18,6 +18,15 @@ img:hover{
     transform: scale(1.1) rotate(5deg);
 }
 
+.imagem-de-fundo {
+    background-image: url('https://i.pinimg.com/originals/5b/ff/5f/5bff5f2a8799026d964e0d6922188e41.jpg');
+    background-size: cover; /* Cubra toda a área disponível */
+    background-position: center; /* Posição da imagem, centro na horizontal, topo na vertical */
+    width: 100%; /* Largura de toda a página */
+    height: 300px; /* Altura definida */
+}
+
+
 .featured-product{
     margin: 20px;
     text-align: center;
