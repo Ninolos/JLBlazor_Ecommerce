@@ -1,4 +1,4 @@
-﻿@page "/products/{id:int}"
+﻿@page "/product/{id:int}"
 @inject IProductService ProductService
 @using JLBlazor_Ecommerce.Shared.Models;
 
@@ -8,7 +8,7 @@
 }
 else
 {
-    <div class="media">
+    <div class="media" style="margin-top: 75px;">
         <div class="media-img-wrapper mr-2">
             <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
         </div>
@@ -39,7 +39,7 @@ else
                 </h4>
             }            
         </div>
-    </div>
+    </div>    
 }
 
 @code {

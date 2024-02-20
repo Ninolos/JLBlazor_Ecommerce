@@ -1,6 +1,7 @@
 ﻿using JLBlazor_Ecommerce.Server.Data;
 using JLBlazor_Ecommerce.Server.Services.ProductService;
 using JLBlazor_Ecommerce.Shared;
+using JLBlazor_Ecommerce.Shared.DTOs;
 using JLBlazor_Ecommerce.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -68,10 +69,10 @@ namespace JLBlazor_Ecommerce.Server.Controllers
         }
 
         [HttpGet]
-        [Route("search/{searchText}")]
-        public ActionResult<ServiceResponse<Product>> SearchProducts(string searchText)
+        [Route("search/{searchText}/{page}")]
+        public ActionResult<ServiceResponse<ProductSearchResult>> SearchProducts(string searchText, int page = 1)
         {
-            var products = _productService.SearchProducts(searchText);
+            var products = _productService.SearchProducts(searchText, page);
 
             if (products.Result.Data != null)
             {
@@ -101,5 +102,21 @@ namespace JLBlazor_Ecommerce.Server.Controllers
 
         }
 
+        [HttpGet]
+        [Route("featured")]
+        public ActionResult<ServiceResponse<Product>> GetFeaturedProducts()
+        {
+            var products = _productService.GetFeaturedProducts();
+
+            if (products.Result.Data != null)
+            {
+                return Ok(products.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }
