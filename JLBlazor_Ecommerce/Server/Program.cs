@@ -1,4 +1,4 @@
-using JLBlazor_Ecommerce.Client.Services.CartService;
+using JLBlazor_Ecommerce.Server.Services.CartService;
 using JLBlazor_Ecommerce.Server.Data;
 using JLBlazor_Ecommerce.Server.Services.CategoryService;
 using JLBlazor_Ecommerce.Server.Services.ProductService;
