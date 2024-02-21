@@ -1,3 +1,4 @@
+using JLBlazor_Ecommerce.Client.Services.CartService;
 using JLBlazor_Ecommerce.Server.Data;
 using JLBlazor_Ecommerce.Server.Services.CategoryService;
 using JLBlazor_Ecommerce.Server.Services.ProductService;
@@ -19,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
 
