@@ -1,5 +1,6 @@
 ﻿@page "/product/{id:int}"
 @inject IProductService ProductService
+@inject ICartService CartService
 @using JLBlazor_Ecommerce.Shared.Models;
 
 @if (product == null)
@@ -38,6 +39,9 @@ else
                     $@GetSelectedVariant().Price
                 </h4>
             }            
+            <button class="btn btn-primary" @onclick="AddToCart">
+                <i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp; Add to Cart
+            </button>
         </div>
     </div>    
 }
@@ -66,12 +70,24 @@ else
                 currentTypeId = product.Variants.First().ProductTypeId;
             }
         };
-                
+
     }
     private ProductVariant GetSelectedVariant()
     {
         var variant = product.Variants.FirstOrDefault(v => v.ProductTypeId == currentTypeId);
 
         return variant;
+    }
+
+    private async Task AddToCart()
+    {
+        var productVartiant = GetSelectedVariant();
+        var cartItem = new CartItem
+            {
+                ProductId = productVartiant.ProductId,
+                ProductTypeId = productVartiant.ProductTypeId
+            };
+
+        await CartService.AddToCart(cartItem);
     }
 }
